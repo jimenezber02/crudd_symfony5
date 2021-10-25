@@ -56,7 +56,7 @@
                                 <div class="col-11">
                                     {% include 'helper/image_preview.html.twig' with {
                                         'label' : 'Imagen',
-                                        'image' : getImage('imagen', datos.imagen|default()),
+                                        'image' : getImage('imagen/datos', datos.imagen|default()),
                                         'required' : true,
                                         'name' : 'imagen',
                                         'id' : 'fileimagen',

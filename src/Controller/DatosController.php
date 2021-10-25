@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classes\Enums\PaginationConfig;
 use App\Classes\FileUploader;
 use App\Entity\Datos;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,9 +34,38 @@ class DatosController extends AbstractController
     function ajaxLoadDatos(Request $request):Response
     {
         $em = $this->getDoctrine()->getManager();
-        $datos = null;
-
+        $pageactive = $request->get('page') ?? PaginationConfig::PAGE;
+        $perpage = $request->get('perpage') ?? PaginationConfig::PERPAGE;
         $nombre = $request->get('nombre');
+
+        $datos = $em->getRepository('App:Datos')->findDatos();
+
+        $result = null;
+        foreach ($datos as $val){
+            $result[] = [
+                'id' =>$val['id'],
+                'nombre' => $val['nombre'],
+                'apellido' => $val['apellido'],
+                'sexo' => $val['sexo'],
+                'imagen' => $val['imagen'],
+                'activo' => $val['activo'],
+                'count' => $datos->getQuery()->getSingleScalarResult()
+            ];
+        }
+
+        return new JsonResponse([
+           $result
+        ]);
+
+        /*
+
+        return $this->render('datos/list.html.twig',[
+            'datos'=>$result,
+            'pagecount' => 2,
+            'pageactive' => $pageactive,
+            'perpage' => $perpage,
+        ]);
+        */
     }
 
     /**
@@ -108,7 +138,7 @@ class DatosController extends AbstractController
             $datos->setImagen($newFilename);
         }*/
         if($imagen){
-            $imagenName = $fileUploader->upload($imagen);
+            $imagenName = $fileUploader->upload($imagen,"datos");
             $datos->setImagen($imagenName);
         }
 

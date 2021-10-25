@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="card-toolbar w-100">
-                <form id="form_search_Ciudad" class="w-100">
+                <form id="form_search_datos" class="w-100">
                     <div class="row w-100">
                         <div class="col-3 mb-5">
                             <label class="fw-bold fs-6 mb-2">Id</label>
@@ -37,7 +37,7 @@
                         <div class="col-3 mb-5">
                             <label class="fw-bold fs-6 mb-2">Nombre</label>
                             <input type="text" name="nombre" class="form-control form-control-solid mb-3 mb-lg-0"
-                                   data-action="enterFindCiudad">
+                                   data-action="enterFindCiudad" value="hj">
                         </div>
                         <div class="col-2 mb-5">
                             <label class="fw-bold fs-6 mb-2">Estado</label>
@@ -67,14 +67,16 @@
     <script src="{{ asset('assets/js/global/table.js') }}"></script>
     <script src="{{ asset('assets/js/global/formfields.js') }}"></script>
     <script src="{{ asset('assets/js/global/image.js') }}"></script>
-    <script src="{{ asset('datos.js') }}"></script>
+    <script src="{{ asset('datos.js?55ff65f56f') }}"></script>
     <script>
         TML.onReady = function (){
             urls = {
                 'loadDato': "{{ path('AdministracionajaxloadDato') }}",
-                'saveDato': "{{ path('AdministracionajaxSaveDato') }}"
+                'saveDato': "{{ path('AdministracionajaxSaveDato') }}",
+                'loadDatos': "{{ path('AdministracionajaxLoadDatos') }}",
             };
             DatosManager.init(urls);
+            DatosManager.loadDatos();
         }
     </script>
 {% endblock %}

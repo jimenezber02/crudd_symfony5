@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Classes\SmtQueryBuilder;
+use App\Classes\TMLListResult;
 use App\Entity\Datos;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,6 +21,34 @@ class DatosRepository extends ServiceEntityRepository
         parent::__construct($registry, Datos::class);
     }
 
+    public function findDatos(array $options = null, $page = null, $perpage = 0)
+    {
+        /*$query = SmtQueryBuilder::select()
+            ->sqlCalcFoundRows()
+            ->column('c.id', 'id')
+            ->column('c.nombre', 'nombre')
+            ->column('c.apellido', 'apellido')
+            ->column('c.sexo', 'sexo')
+            ->column('c.imagen', 'imagen')
+            ->column('c.activo', 'activo')
+            ->from('datos', 'c')
+        ;
+        if(isset($options['nombre'])){
+            $nombre = $options['nombre'];
+            $query->where("c.nombre LIKE :search")
+                ->bind('search', "%$nombre%");
+        }
+        SmtQueryBuilder::paginate($query,$page, $perpage);
+
+        $datos = $query->executeUsing($this->getEntityManager()->getConnection())->fetchAllAssociative();
+        $cant = $query->getTotalUsing();
+
+        return new TMLListResult($datos, $cant);*/
+        return $this->getEntityManager()
+            ->createQuery('
+            SELECT datos.id, datos.nombre, datos.apellido, datos.activo, datos.sexo, datos.imagen
+            From App:Datos datos')->getResult();
+    }
     // /**
     //  * @return Datos[] Returns an array of Datos objects
     //  */

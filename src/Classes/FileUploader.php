@@ -1,6 +1,7 @@
 <?php
 namespace App\Classes;
 
+use PhpParser\Node\Scalar\String_;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -16,13 +17,13 @@ class FileUploader
         $this->slugger = $slugger;
     }
 
-    public function upload(UploadedFile $file)
+    public function upload(UploadedFile $file,String $ext)
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         // this is needed to safely include the file name as part of the URL
         $safeFilename = $this->slugger->slug($originalFilename);
         $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
-        $ubicacion = $this->getTargetDirectory().'/imagen';
+        $ubicacion = $this->getTargetDirectory().'/imagen/'.$ext;
 
         try {
             $file->move(

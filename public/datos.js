@@ -15,12 +15,27 @@ var DatosManager = {
             DatosManager.saveDato();
         });
     },
-
+    loadDatos: function (page= 1){
+        var form = $('#form_search_datos');
+        console.log(form.serialize());
+        TML.ajax({
+            url: urls.loadDatos,
+            data: form.serialize()+'&page='+page,
+            lockContainer: true,
+            checkResponse: true,
+            callback: function (response){
+                console.log(response);
+                //$('#container_datos').html(response);
+                //TableManager.initTable('#table_datos', DatosManager.loadDatos);
+                DatosManager._initEvents();
+            }
+        });
+    },
     loadDato: function (id){
         TML.ajax({
            url: urls.loadDato,
            data: {
-               id: 8
+               id: id
            },
             lockContainer: true,
             checkResponse: true,
