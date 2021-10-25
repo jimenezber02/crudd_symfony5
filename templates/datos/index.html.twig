@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DatosController!{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header border-0 pt-6">
+            <div class="card-title w-100">
+                <div class="row w-100">
+                    <div class="col-8">
+                        <h3>Datos</h3>
+                    </div>
+                    <div class="col-4" style="text-align: right">
+                        <button type="button" class="btn btn-primary" data-action="loadDato">
+                        <span class="svg-icon svg-icon-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2"
+                                  rx="1" transform="rotate(-90 11.364 20.364)"
+                                  fill="black"></rect>
+                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
+                                  fill="black"></rect>
+                        </svg>
+                    </span>Agregar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-toolbar w-100">
+                <form id="form_search_Ciudad" class="w-100">
+                    <div class="row w-100">
+                        <div class="col-3 mb-5">
+                            <label class="fw-bold fs-6 mb-2">Id</label>
+                            <input type="text" name="id" class="form-control form-control-solid mb-3 mb-lg-0"
+                                   data-action="enterFindDato">
+                        </div>
+                        <div class="col-3 mb-5">
+                            <label class="fw-bold fs-6 mb-2">Nombre</label>
+                            <input type="text" name="nombre" class="form-control form-control-solid mb-3 mb-lg-0"
+                                   data-action="enterFindCiudad">
+                        </div>
+                        <div class="col-2 mb-5">
+                            <label class="fw-bold fs-6 mb-2">Estado</label>
+                            <select class="form-control form-control-solid" name="activo"
+                                    data-action="selectFindDato">
+                                <option value="2">Todos</option>
+                                <option value="1">Activos</option>
+                                <option value="0">Inactivos</option>
+                            </select>
+                        </div>
+
+                        <div class="col-1">
+                            <button type="button" class="btn btn-icon btn-primary mt-8" data-action="findDato"><i
+                                        class="las la-search fs-2"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body pt-0">
+            <div id="container_datos" class="card"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/global/table.js') }}"></script>
+    <script src="{{ asset('assets/js/global/formfields.js') }}"></script>
+    <script src="{{ asset('assets/js/global/image.js') }}"></script>
+    <script src="{{ asset('datos.js') }}"></script>
+    <script>
+        TML.onReady = function (){
+            urls = {
+                'loadDato': "{{ path('AdministracionajaxloadDato') }}",
+                'saveDato': "{{ path('AdministracionajaxSaveDato') }}"
+            };
+            DatosManager.init(urls);
+        }
+    </script>
+{% endblock %}

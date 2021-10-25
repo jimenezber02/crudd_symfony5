@@ -1,0 +1,25 @@
+{% set label = label|default('Archivo') %}
+{% set accept = accept|default('') %}
+{% set name = name|default('file') %}
+{% set id = id|default('file') %}
+{% set required = required|default() %}
+{% set fileinfo = fileinfo|default('Subir archivo...') %}
+{% set url = url|default() %}
+
+<label class="col-12 fw-bold fs-6 {% if(required) %} required {% endif %}">{{ label }}</label>
+<div class="col-12" style="margin-top: 8px">
+    <div class="alert alert-primary d-flex justify-content-between" style="padding: .75rem 1rem;">
+        <div data-action="loadFileInfo" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Subir archivo">
+            <i class="fa fa-upload text-primary"></i>&nbsp;
+            <span id="span_fileinfo">{{ fileinfo }}</span>
+        </div>
+        <div class="">
+            {% if(url) %}
+                <a href="{{ url }}" target="_blank" class="" data-bs-toggle="tooltip" data-bs-placement="top" title="Descargar archivo">
+                    <i class="fa fa-download text-primary"></i>
+                </a>
+            {% endif %}
+        </div>
+        <input type="file" class="file" name="{{ name }}" id="{{ id }}" accept="{{ accept }}" {% if(required) %} required="required" {% endif %} style="display: none" />
+    </div>
+</div>

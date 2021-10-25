@@ -1,0 +1,136 @@
+label.error{
+    width: 100%;
+    margin-top: .5rem;
+    font-size: .925rem;
+    color: #f1416c;
+}
+
+img.preview_imagen{
+   cursor: pointer;
+}
+/**/
+.imgfit img
+{
+    max-width: 100%;
+}
+
+form .form-group{
+    margin-bottom: 20px;
+}
+
+/* region tree */
+.category_tree{
+    display: none;
+    min-width: 300px;
+    max-height: 200px;
+    position: absolute;
+    z-index: 99;
+    border: 1px solid #ebedf2;
+    box-shadow: 0px 0px 50px 0px rgba(82, 63, 105, 0.15);
+    background-color: #ffffff;
+}
+.category_tree .tree{
+    min-width: 300px;
+    max-height: 200px;
+    overflow: auto;
+}
+.category_tree .btn_close{
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    right: 20px;
+    font-size: 1.2rem;
+    z-index: 999;
+    background-color: transparent;
+    border: none;
+}
+.btn_close_i:hover{
+    color: #d9214e !important;
+}
+.decimal_field{
+
+}
+.form-inline{
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+/*seccion pruebas aris*/
+.forok .menu-link .menu-title,.forok .menu-link .menu-icon
+{
+    color: green !important;
+}
+
+.forwait .menu-link .menu-title,.forwait .menu-link .menu-icon
+{
+    color: red !important;
+}
+
+.revisado .menu-link .menu-title,.forwait .menu-link .menu-icon
+{
+    color: blue;
+}
+
+.card-widget-title{
+    width: 80%;
+}
+.card-widget-label{
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.card-widget-toolbar{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+.card-body-info-right{
+    text-align: right;
+    width: 85%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-left: 15px !important;
+}
+
+.input-group-prepend{
+    margin-left: -5px;
+}
+.input-group-text{
+    background-color: #ffffff;
+    border-color: #f5f8fa;
+    color: #5e6278;
+    transition: color .2s ease,background-color .2s ease;
+    padding: 13px;
+}
+.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    margin-left: -4px !important;
+}
+
+.container_options_check .form-check{
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 5px;
+}
+
+.container_options_radio .form-check{
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 5px;
+}
+.ui-sortable-handle {
+    cursor: move;
+}
+
+.ui-draggable-handle {
+    cursor: move;
+}
+
+
+.jstree-container-ul:first-child{
+    padding-top: 15px !important;
+    margin-left: 10px !important;
+}

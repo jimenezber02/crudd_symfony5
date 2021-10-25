@@ -5,15 +5,52 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
+        {# <link href="{{ asset('vendor/metronic/css/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css"/> #}
+        <link href="{{ asset('vendor/metronic/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('vendor/metronic/css/style.bundle.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet" type="text/css"/>
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
         {% endblock %}
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+    <div id="modal_container"></div>
+    <div id="modal_container_aux"></div>
+
+    <script src="{{ asset('vendor/metronic/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('vendor/metronic/js/scripts.bundle.js') }}"></script>
+    <script src="{{ asset('vendor/metronic/js/layout/app.js') }}"></script>
+    <script src="{{ asset('vendor/metronic/js/vendors/plugins/jquery.validate.js') }}"></script>
+    <script src="{{ asset('vendor/metronic/js/vendors/plugins/jquery.form.min.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+
+
+    <script>
+        var message = 'Cargando componentes del sistema'
+        var blockUI = new KTBlockUI(document.querySelector('body'));
+        $(window).on('load', function () {
+
+            var initCorePromise = new Promise(function (resolve, reject) {
+                //TML.init(urls, {{ app.user.id|default() }});
+                resolve();
+            });
+            var initFrameworkPromise = new Promise(function (resolve, reject) {
+                resolve();
+            });
+            initCorePromise
+                .then(initFrameworkPromise)
+                .then(function () {
+                        TML.onReady();
+                    }
+                );
+        });
+    </script>
+
+    {% block javascripts %}
+
+    {% endblock %}
+    {% block body %}{% endblock %}
     </body>
 </html>
