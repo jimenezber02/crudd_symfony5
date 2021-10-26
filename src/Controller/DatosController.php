@@ -37,8 +37,14 @@ class DatosController extends AbstractController
         $pageactive = $request->get('page') ?? PaginationConfig::PAGE;
         $perpage = $request->get('perpage') ?? PaginationConfig::PERPAGE;
         $nombre = $request->get('nombre');
+        $id = $request->get('id');
+        $activo = $request->get('activo');
 
-        $datos = $em->getRepository('App:Datos')->findDatos();
+        $datos = $em->getRepository('App:Datos')->findDatos([
+            'id' => $id,
+            'nombre' => $nombre,
+            'activo' => $activo
+        ]);
 
         $result = null;
         foreach ($datos as $val){
@@ -49,23 +55,23 @@ class DatosController extends AbstractController
                 'sexo' => $val['sexo'],
                 'imagen' => $val['imagen'],
                 'activo' => $val['activo'],
-                'count' => $datos->getQuery()->getSingleScalarResult()
+                'pagecount' => count($datos)
             ];
         }
 
+        /*
         return new JsonResponse([
            $result
-        ]);
+        ]);*/
 
-        /*
 
         return $this->render('datos/list.html.twig',[
-            'datos'=>$result,
-            'pagecount' => 2,
+            'datos'=>$datos->getList(),
+            'pagecount' => $datos->getCount(),
             'pageactive' => $pageactive,
             'perpage' => $perpage,
         ]);
-        */
+
     }
 
     /**

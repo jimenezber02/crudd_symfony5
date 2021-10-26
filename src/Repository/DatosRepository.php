@@ -21,9 +21,9 @@ class DatosRepository extends ServiceEntityRepository
         parent::__construct($registry, Datos::class);
     }
 
-    public function findDatos(array $options = null, $page = null, $perpage = 0)
+    public function findDatos(array $options = null, $page = null, $perpage = 0):TMLListResult
     {
-        /*$query = SmtQueryBuilder::select()
+        $query = SmtQueryBuilder::select()
             ->sqlCalcFoundRows()
             ->column('c.id', 'id')
             ->column('c.nombre', 'nombre')
@@ -43,11 +43,11 @@ class DatosRepository extends ServiceEntityRepository
         $datos = $query->executeUsing($this->getEntityManager()->getConnection())->fetchAllAssociative();
         $cant = $query->getTotalUsing();
 
-        return new TMLListResult($datos, $cant);*/
-        return $this->getEntityManager()
+        return new TMLListResult($datos, $cant);
+        /*return $this->getEntityManager()
             ->createQuery('
             SELECT datos.id, datos.nombre, datos.apellido, datos.activo, datos.sexo, datos.imagen
-            From App:Datos datos')->getResult();
+            From App:Datos datos')->getResult();*/
     }
     // /**
     //  * @return Datos[] Returns an array of Datos objects

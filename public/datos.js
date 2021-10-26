@@ -14,6 +14,10 @@ var DatosManager = {
         $('[data-action="saveDato"]').off('click').on('click',function (){
             DatosManager.saveDato();
         });
+
+        $('[data-action="findDato"]').off('click').on('click',function (){
+            DatosManager.loadDatos();
+        });
     },
     loadDatos: function (page= 1){
         var form = $('#form_search_datos');
@@ -25,8 +29,8 @@ var DatosManager = {
             checkResponse: true,
             callback: function (response){
                 console.log(response);
-                //$('#container_datos').html(response);
-                //TableManager.initTable('#table_datos', DatosManager.loadDatos);
+                $('#container_datos').html(response);
+                TableManager.initTable('#table_datos', DatosManager.loadDatos);
                 DatosManager._initEvents();
             }
         });
