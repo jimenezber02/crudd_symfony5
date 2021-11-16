@@ -33,10 +33,25 @@ class DatosRepository extends ServiceEntityRepository
             ->column('c.activo', 'activo')
             ->from('datos', 'c')
         ;
+
+        if(isset($options['id'])){
+            if($options['id'] != ""){
+                $query->where("c.id = :id")
+                    ->bind('id',$options['id'],'int');
+            }
+        }
+
         if(isset($options['nombre'])){
             $nombre = $options['nombre'];
             $query->where("c.nombre LIKE :search")
                 ->bind('search', "%$nombre%");
+        }
+
+        if(isset($options['activo'])){
+            if($options['activo'] != 2){
+                $query->where("c.activo = :activo")
+                    ->bind('activo',$options['activo'],'int');
+            }
         }
         SmtQueryBuilder::paginate($query,$page, $perpage);
 

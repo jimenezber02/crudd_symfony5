@@ -15,7 +15,7 @@
             </thead>
             <tbody class="text-gray-600 fw-bold">
             {% for datos in datos %}
-                <tr id="tr_notaria{{ datos.id }}" class="odd">
+                <tr id="tr_datos{{ datos.id }}" class="odd">
                     <td>{{ datos.id }}</td>
                     <td>{{ datos.nombre }}</td>
                     <td>
@@ -39,7 +39,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        {{ datos.imagen }}
+                        <img class="preview_imagen" src="{{ getImage('imagen/datos', datos.imagen) }}" alt="" style="width: 40px;">
                     </td>
                     <td>
                         <div class="">
