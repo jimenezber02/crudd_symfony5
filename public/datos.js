@@ -14,13 +14,47 @@ var DatosManager = {
         $('[data-action="saveDato"]').off('click').on('click',function (){
             DatosManager.saveDato();
         });
-    },
 
+        $('[data-action="findDato"]').off('click').on('click',function (){
+            DatosManager.loadDatos();
+        });
+
+        $('[data-action="enterFindDato"]').off('keyup').on('keyup',function (e){
+            if(e.keyCode==13){
+                DatosManager.loadDatos();
+            }
+        });
+
+        $('[data-action="enterFindNombre"]').off('keyup').on('keyup',function (e){
+            if(e.keyCode==13){
+                DatosManager.loadDatos();
+            }
+        });
+
+        $('[data-action="deleteDato"]').off('click').on('click',function (){
+            DatosManager.deleteDato($(this).data('id'));
+        });
+    },
+    loadDatos: function (page= 1){
+        var form = $('#form_search_datos');
+        console.log(form.serialize());
+        TML.ajax({
+            url: urls.loadDatos,
+            data: form.serialize()+'&page='+page,
+            lockContainer: true,
+            checkResponse: true,
+            callback: function (response){
+                $('#container_datos').html(response);
+                TableManager.initTable('#table_datos', DatosManager.loadDatos);
+                DatosManager._initEvents();
+            }
+        });
+    },
     loadDato: function (id){
         TML.ajax({
            url: urls.loadDato,
            data: {
-               id: 8
+               id: id
            },
             lockContainer: true,
             checkResponse: true,
@@ -48,11 +82,30 @@ var DatosManager = {
                 callback: function (response){
                    //DatosManager.saveDato();
                     $('#modal_datos').modal('hide');
+                    DatosManager.loadDatos();
                     TML.showSuccess();
                 }
             });
         }else{
             TML.showErrorValidacion();
         }
+    },
+
+    deleteDato: function (id) {
+        TML.confirm(function (){
+            TML.ajax({
+                url:urls.deleteDato,
+                data: {
+                    id: id
+                },
+                lockContainer: true,
+                checkResponse: true,
+                callback: function (response) {
+                    console.log(response);
+                    $('#tr_datos'+id).remove();
+                    TML.showSuccess();
+                }
+            });
+        });
     }
 }

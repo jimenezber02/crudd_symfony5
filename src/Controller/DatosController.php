@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classes\Enums\PaginationConfig;
 use App\Classes\FileUploader;
 use App\Entity\Datos;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,10 +33,47 @@ class DatosController extends AbstractController
      */
     function ajaxLoadDatos(Request $request):Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $datos = null;
-
         $nombre = $request->get('nombre');
+        $id = $request->get('id');
+        $activo = $request->get('activo');
+        $pageactive = $request->get('page') ?? PaginationConfig::PAGE;
+        $perpage = $request->get('perpage') ?? PaginationConfig::PERPAGE;
+
+        $em = $this->getDoctrine()->getManager();
+
+        $datos = $em->getRepository('App:Datos')->findDatos([
+            'id' => $id,
+            'nombre' => $nombre,
+            'activo' => $activo
+        ],$pageactive,$perpage);
+
+        /*
+        $result = null;
+        foreach ($datos as $val){
+            $result[] = [
+                'id' =>$val['id'],
+                'nombre' => $val['nombre'],
+                'apellido' => $val['apellido'],
+                'sexo' => $val['sexo'],
+                'imagen' => $val['imagen'],
+                'activo' => $val['activo'],
+                'pagecount' => count($datos)
+            ];
+        }*/
+
+        /*
+        return new JsonResponse([
+           $result
+        ]);*/
+
+
+        return $this->render('datos/list.html.twig',[
+            'datos'=>$datos->getList(),
+            'pagecount' => $datos->getCount(),
+            'pageactive' => $pageactive,
+            'perpage' => $perpage,
+        ]);
+
     }
 
     /**
@@ -78,37 +116,8 @@ class DatosController extends AbstractController
         $datos->setSexo($sexo);
         $datos->setActivo($activo);
 
-        /*if ($imagen) {
-            $originalFilename = pathinfo($imagen->getClientOriginalName(), PATHINFO_FILENAME);
-            // this is needed to safely include the file name as part of the URL
-            $safeFilename = $slugger->slug($originalFilename);
-            $newFilename = $safeFilename.'-'.uniqid().'.'.$imagen->guessExtension();
-
-            // Move the file to the directory where brochures are stored
-            try {
-                if(file_exists('datos')){
-                    $imagen->move(
-                        $this->getParameter('imagen_directory/datos'),
-                        $newFilename
-                    );
-                }else{
-                    mkdir('imagen_directory/datos',0777,true);
-                    $imagen->move(
-                        $this->getParameter('imagen_directory/datos'),
-                        $newFilename
-                    );
-                }
-
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
-            }
-
-            // updates the 'brochureFilename' property to store the PDF file name
-            // instead of its contents
-            $datos->setImagen($newFilename);
-        }*/
         if($imagen){
-            $imagenName = $fileUploader->upload($imagen);
+            $imagenName = $fileUploader->upload($imagen,"datos");
             $datos->setImagen($imagenName);
         }
 
@@ -116,5 +125,31 @@ class DatosController extends AbstractController
         $em->flush();
 
         return new JsonResponse('OK');
+    }
+
+    /**
+     * @Route("/ajaxDeleteDato", name="ajaxDeleteDato")
+     */
+    function ajaxDeleteDato(Request $request):Response
+    {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+
+        $dato = null;
+        $dato = $em->getRepository('App:Datos')->find($id);
+
+        /*
+        if($dato){
+            $result = null;
+            $result[] = [
+              'id' => $dato->getId(),
+              'nombre' => $dato->getNombre(),
+              'sexo' => $dato->getSexo()
+            ];
+        }*/
+        $em->remove($dato);
+        $em->flush();
+
+        return new JsonResponse('Ok');
     }
 }
