@@ -82,7 +82,7 @@ class DatosController extends AbstractController
     function ajaxloadDato(Request $request):Response
     {
         $id = $request->get('id');
-
+        
         $em = $this->getDoctrine()->getManager();
         $datos = null;
         if($id){

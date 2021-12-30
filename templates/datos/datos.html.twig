@@ -1,100 +1,87 @@
-{#
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        {% if datos is not null %}
-                            Editar dato:: {{ datos.nombre|default() }}
-                        {% else %}
-                            Agregar dato
-                        {% endif %}
-                    </h5>
-                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
-                         aria-label="Close">
-                        <span class="svg-icon svg-icon-2x">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none">
-                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
-                                      transform="rotate(-45 6 17.3137)" fill="black"></rect>
-                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                                      fill="black"></rect>
-                            </svg>
-                        </span>
-                    </div>
+<div class="modal fade" tabindex="-1" id="modal_datos">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {% if datos is not null %}
+                        Editar dato:: {{ datos.nombre|default() }}
+                    {% else %}
+                        Agregar dato
+                    {% endif %}
+                </h5>
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <span class="svg-icon svg-icon-2x">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                    transform="rotate(-45 6 17.3137)" fill="black"></rect>
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                    fill="black"></rect>
+                        </svg>
+                    </span>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <form id="form_datos" class="form_datos">
-                        <div class="col-10"></div>
-                        <div class="col-2 mb-2">
-                            <div class="form-check form-switch form-check-custom form-check-solid">
-                                <input class="form-check-input" type="checkbox" name="activo"   {% if(datos.activo|default()) %} checked="checked" {% endif %}>
-                                <label class="form-check-label fw-bold fs-6" for="flexSwitchChecked">Activo</label>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form id="form_datos" class="form_datos">
+                    <div class="col-10"></div>
+                    <div class="col-2 mb-2">
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" name="activo"   {% if(datos.activo|default()) %} checked="checked" {% endif %}>
+                            <label class="form-check-label fw-bold fs-6" for="flexSwitchChecked">Activo</label>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <label class="required fw-bold fs-6 mb-2">Nombre</label>
+                        <input type="text" name="nombre" class="form-control form-control-solid mb-3 mb-lg-0"
+                                value="{{ datos.nombre|default() }}" required="required">
+                    </div>
+                    <div class="col-6 mb-5">
+                        <label class="required fw-bold fs-6 mb-2">Apellido</label>
+                        <input type="text" name="apellido" class="form-control form-control-solid mb-3 mb-lg-0"
+                                value="{{ datos.apellido|default() }}" required="required">
+                    </div>
+                    <div class="col-6 mb-5">
+                        <label class="required fw-bold fs-6 mb-2">Sexo</label>
+                        <select id="sexo" name="sexo" class="form-control"  required="required">
+                            <option value="">Seleccione</option>
+                            <option value="m" {% if(datos.sexo|default() == 'm') %} selected="selected" {% endif %}>Masculino</option>
+                            <option value="f" {% if(datos.sexo|default() == 'f') %} selected="selected" {% endif %}>Femenino</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-11">
+                                {% include 'helper/image_preview.html.twig' with {
+                                    'label' : 'Imagen',
+                                    'image' : getImage('imagen/datos', datos.imagen|default()),
+                                    'required' : true,
+                                    'name' : 'imagen',
+                                    'id' : 'fileimagen',
+                                } %}
                             </div>
                         </div>
-                        <div class="col-6 mb-5">
-                            <label class="required fw-bold fs-6 mb-2">Nombre</label>
-                            <input type="text" name="nombre" class="form-control form-control-solid mb-3 mb-lg-0"
-                                   value="{{ datos.nombre|default() }}" required="required">
-                        </div>
-                        <div class="col-6 mb-5">
-                            <label class="required fw-bold fs-6 mb-2">Apellido</label>
-                            <input type="text" name="apellido" class="form-control form-control-solid mb-3 mb-lg-0"
-                                   value="{{ datos.apellido|default() }}" required="required">
-                        </div>
-                        <div class="col-6 mb-5">
-                            <label class="required fw-bold fs-6 mb-2">Sexo</label>
-                            <select id="sexo" name="sexo" class="form-control"  required="required">
-                                <option value="">Seleccione</option>
-                                <option value="m" {% if(datos.sexo|default() == 'm') %} selected="selected" {% endif %}>Masculino</option>
-                                <option value="f" {% if(datos.sexo|default() == 'f') %} selected="selected" {% endif %}>Femenino</option>
-                            </select>
-                        </div>
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-1"></div>
-                                <div class="col-11">
-                                    {% include 'helper/image_preview.html.twig' with {
-                                        'label' : 'Imagen',
-                                        'image' : getImage('imagen/datos', datos.imagen|default()),
-                                        'required' : true,
-                                        'name' : 'imagen',
-                                        'id' : 'fileimagen',
-                                    } %}
-                                </div>
-                            </div>
-                        </div>
-                        </form>
                     </div>
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-6 mb-5">
-                            <select name="provincia" id="">
-                                <option value="">Seleccione</option>
-                            </select>
-                        </div>
+                    </form>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-6 mb-5">
+                        <select name="provincia" id="">
+                            <option value="">Seleccione</option>
+                        </select>
                     </div>
                 </div>
-                <div class="modal-footer d-flex justify-content-between">
-                    <input type="hidden" name="id" value="{{ datos.id|default() }}">
-                    <button type="button" class="btn btn-light mr-auto" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" name="saveDato" class="btn btn-primary" data-action="saveDato">Guardar
-                    </button>
-                </div>
-
-            {#  </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <input type="hidden" name="id" value="{{ datos.id|default() }}">
+                <button type="button" class="btn btn-light mr-auto" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" name="saveDato" class="btn btn-primary" data-action="saveDato">Guardar
+                </button>
+            </div>
         </div>
-    </div>#}
-
-    <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
     </div>
-    <div class="modal-body">
-        ...
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-    </div>
+</div>
 
 
