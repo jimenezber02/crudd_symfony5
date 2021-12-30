@@ -1,7 +1,4 @@
-<form id="form_datos" class="form_datos">
-    <div class="modal fade" tabindex="-1" id="modal_datos">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+{#
                 <div class="modal-header">
                     <h5 class="modal-title">
                         {% if datos is not null %}
@@ -25,6 +22,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <form id="form_datos" class="form_datos">
                         <div class="col-10"></div>
                         <div class="col-2 mb-2">
                             <div class="form-check form-switch form-check-custom form-check-solid">
@@ -64,6 +62,7 @@
                                 </div>
                             </div>
                         </div>
+                        </form>
                     </div>
                     <div class="row d-flex justify-content-center">
                         <div class="col-6 mb-5">
@@ -79,7 +78,23 @@
                     <button type="button" name="saveDato" class="btn btn-primary" data-action="saveDato">Guardar
                     </button>
                 </div>
-            </div>
+
+            {#  </div>
         </div>
+    </div>#}
+
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
-</form>
+    <div class="modal-body">
+        ...
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+    </div>
+
+
