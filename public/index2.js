@@ -1,6 +1,8 @@
 $(document).ready(function (){
     console.log("documento cargado");
 
+    loadDatos();
+
     $('[data-action="loadDato"]').off('click').on('click',function (){
         //DatosManager.loadDato($(this).data('id'));
         console.log("boton agregar"+$(this).data('id'));
@@ -9,3 +11,15 @@ $(document).ready(function (){
         });
     });
 });
+
+function loadDatos(){
+    $.ajax({
+        url: '/AdministracionajaxLoadDatos',
+        type: 'post',
+        data: null,
+        success:function(response){
+            //$('#container_datos').html(response);
+            console.log(response);
+        }
+    });
+}
