@@ -23,3 +23,14 @@ function loadDatos(){
         }
     });
 }
+function preview(input){
+    var file = $('input[type=file]').get(0).files[0];
+    if(file){
+      var reader = new FileReader();
+      reader.onload = function (){
+        $('.image-input').attr("style","background-image: url("+reader.result+")");
+        console.log(reader);
+      }
+      reader.readAsDataURL(file);
+    }
+  }
