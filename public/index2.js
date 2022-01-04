@@ -14,12 +14,12 @@ $(document).ready(function (){
 
 function loadDatos(){
     $.ajax({
-        url: '/AdministracionajaxLoadDatos',
+        url: '/Administracion/ajaxLoadDatos',
         type: 'post',
         data: null,
         success:function(response){
-            //$('#container_datos').html(response);
-            console.log(response);
+            $('#container_datos').html(response);
+            //console.log(response);
         }
     });
 }
