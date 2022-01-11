@@ -6,20 +6,35 @@ $(document).ready(function (){
     $('[data-action="loadDato"]').off('click').on('click',function (){
         //DatosManager.loadDato($(this).data('id'));
         //console.log("boton agregar"+$(this).data('id'));
-        modal();
+        id = $(this).data('id');
+        modal(id);
     });
+    $('[data-action="saveDato"]').off('click').on('click',function (e){
+        console.log("boton save dato");
+        id = $(this).data('id');
+        console.log(id);
 
+    });
 
 
 });
 
 function modal(id){
-    $('#modal_container').load('/Administracion/ajaxloadDato',{id:id},function(){
+    /*$('#modal_container').load('/Administracion/ajaxloadDato',{async:false,id:id},function(){
         $('#modal_datos').modal('show');
-
-        $('[data-action="saveDato"]').off('click').on('click',function (e){
-            console.log(id);
-        });
+    });*/
+    console.log('funcion');
+    $.ajax({
+      url: '/Administracion/ajaxloadDato',
+      data: {
+        id: id
+      },
+      lockContainer: true,
+      checkResponse: true,
+      success: function(response){
+       
+        $('#modal_datos').modal('show');
+      }
     });
 }
 function loadDatos(){
@@ -27,12 +42,13 @@ function loadDatos(){
         url: '/Administracion/ajaxLoadDatos',
         type: 'post',
         data: null,
+        async: false,
         success:function(response){
             $('#container_datos').html(response);
-            $('[data-action="loadDato"]').off('click').on('click',function (){
+            /*$('[data-action="loadDato"]').off('click').on('click',function (){
                 id = $(this).data('id')
                 modal(id);
-            });
+            });*/
             //console.log(response);
         }
     });
