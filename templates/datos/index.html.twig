@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="card-toolbar w-100">
-                {#  <form id="form_search_datos" class="w-100">
+                <form id="form_search_datos" class="w-100">
                     <div class="row w-100">
                         <div class="col-3 mb-5">
                             <label class="fw-bold fs-6 mb-2">Id</label>
@@ -49,12 +49,16 @@
                             </select>
                         </div>
 
-                        <div class="col-1">
-                            <button type="button" class="btn btn-icon btn-primary mt-8" data-action="findDato"><i
-                                        class="las la-search fs-2"></i></button>
+                        <div class="col-2 mb-5 d-flex align-items-end">
+                            <button type="button" class="btn btn-icon btn-primary mt-8" data-action="findDatos">
+                                <i class="bi bi-search"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+</svg>
+                            </button>
                         </div>
                     </div>
-                </form>#}
+                </form>
             </div>
         </div>
         <div class="card-body pt-0">
@@ -64,22 +68,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    {#
-        <script src="{{ asset('assets/js/global/table.js') }}"></script>
-        <script src="{{ asset('assets/js/global/formfields.js') }}"></script>
-        <script src="{{ asset('assets/js/global/image.js') }}"></script>
-    #}
-    <script src="{{ asset('index2.js?55fffcfcs5') }}"></script>
-    {# <script>
-        TML.onReady = function (){
-            urls = {
-                'loadDato': "{{ path('AdministracionajaxloadDato') }}",
-                'saveDato': "{{ path('AdministracionajaxSaveDato') }}",
-                'loadDatos': "{{ path('AdministracionajaxLoadDatos') }}",
-                'deleteDato': "{{ path('AdministracionajaxDeleteDato') }}",
-            };
-            DatosManager.init(urls);
-            DatosManager.loadDatos();
-        }
-    </script>#}
+    <script src="{{ asset('index2.js?55f655') }}"></script>
 {% endblock %}

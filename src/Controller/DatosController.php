@@ -45,27 +45,7 @@ class DatosController extends AbstractController
             'id' => $id,
             'nombre' => $nombre,
             'activo' => $activo
-        ],$pageactive,$perpage);
-
-        /*
-        $result = null;
-        foreach ($datos as $val){
-            $result[] = [
-                'id' =>$val['id'],
-                'nombre' => $val['nombre'],
-                'apellido' => $val['apellido'],
-                'sexo' => $val['sexo'],
-                'imagen' => $val['imagen'],
-                'activo' => $val['activo'],
-                'pagecount' => count($datos)
-            ];
-        }*/
-
-        /*
-        return new JsonResponse([
-           $result
-        ]);*/
-
+        ]);
 
         return $this->render('datos/list.html.twig',[
             'datos'=>$datos->getList(),
@@ -73,7 +53,6 @@ class DatosController extends AbstractController
             'pageactive' => $pageactive,
             'perpage' => $perpage,
         ]);
-
     }
 
     /**
@@ -123,7 +102,6 @@ class DatosController extends AbstractController
 
         $em->persist($datos);
         $em->flush();
-
         return new JsonResponse('OK');
     }
 
@@ -136,20 +114,10 @@ class DatosController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $dato = null;
-        $dato = $em->getRepository('App:Datos')->find($id);
+        //$dato = $em->getRepository('App:Datos')->find($id);
+        //$em->remove($dato);
+        //$em->flush();
 
-        /*
-        if($dato){
-            $result = null;
-            $result[] = [
-              'id' => $dato->getId(),
-              'nombre' => $dato->getNombre(),
-              'sexo' => $dato->getSexo()
-            ];
-        }*/
-        $em->remove($dato);
-        $em->flush();
-
-        return new JsonResponse('Ok');
+        return new JsonResponse($id);
     }
 }
