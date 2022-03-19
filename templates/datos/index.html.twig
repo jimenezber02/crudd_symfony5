@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="card-toolbar w-100">
-                {#  <form id="form_search_datos" class="w-100">
+                <form id="form_search_datos" class="w-100">
                     <div class="row w-100">
                         <div class="col-3 mb-5">
                             <label class="fw-bold fs-6 mb-2">Id</label>
@@ -50,11 +50,12 @@
                         </div>
 
                         <div class="col-1">
-                            <button type="button" class="btn btn-icon btn-primary mt-8" data-action="findDato"><i
-                                        class="las la-search fs-2"></i></button>
+                            <button type="button" class="btn btn-icon btn-primary mt-8" data-action="findDatos">
+                                <i class="las la-search fs-2"></i>
+                            </button>
                         </div>
                     </div>
-                </form>#}
+                </form>
             </div>
         </div>
         <div class="card-body pt-0">
@@ -64,22 +65,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    {#
-        <script src="{{ asset('assets/js/global/table.js') }}"></script>
-        <script src="{{ asset('assets/js/global/formfields.js') }}"></script>
-        <script src="{{ asset('assets/js/global/image.js') }}"></script>
-    #}
-    <script src="{{ asset('index2.js?55fffcfcs5') }}"></script>
-    {# <script>
-        TML.onReady = function (){
-            urls = {
-                'loadDato': "{{ path('AdministracionajaxloadDato') }}",
-                'saveDato': "{{ path('AdministracionajaxSaveDato') }}",
-                'loadDatos': "{{ path('AdministracionajaxLoadDatos') }}",
-                'deleteDato': "{{ path('AdministracionajaxDeleteDato') }}",
-            };
-            DatosManager.init(urls);
-            DatosManager.loadDatos();
-        }
-    </script>#}
+    <script src="{{ asset('index2.js?55f655') }}"></script>
 {% endblock %}

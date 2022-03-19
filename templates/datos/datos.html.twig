@@ -22,55 +22,53 @@
                     </span>
                 </div>
             </div>
+            <form id="form_datos" class="form_datos">
             <div class="modal-body">
                 <div class="row">
-                    <form id="form_datos" class="form_datos">
-                    <div class="col-10"></div>
-                    <div class="col-2 mb-2">
-                        <div class="form-check form-switch form-check-custom form-check-solid">
-                            <input class="form-check-input" type="checkbox" name="activo"   {% if(datos.activo|default()) %} checked="checked" {% endif %}>
-                            <label class="form-check-label fw-bold fs-6" for="flexSwitchChecked">Activo</label>
-                        </div>
-                    </div>
-                    <div class="col-6 mb-5">
-                        <label class="required fw-bold fs-6 mb-2">Nombre</label>
-                        <input type="text" name="nombre" class="form-control form-control-solid mb-3 mb-lg-0"
-                                value="{{ datos.nombre|default() }}" required="required">
-                    </div>
-                    <div class="col-6 mb-5">
-                        <label class="required fw-bold fs-6 mb-2">Apellido</label>
-                        <input type="text" name="apellido" class="form-control form-control-solid mb-3 mb-lg-0"
-                                value="{{ datos.apellido|default() }}" required="required">
-                    </div>
-                    <div class="col-6 mb-5">
-                        <label class="required fw-bold fs-6 mb-2">Sexo</label>
-                        <select id="sexo" name="sexo" class="form-control"  required="required">
-                            <option value="">Seleccione</option>
-                            <option value="m" {% if(datos.sexo|default() == 'm') %} selected="selected" {% endif %}>Masculino</option>
-                            <option value="f" {% if(datos.sexo|default() == 'f') %} selected="selected" {% endif %}>Femenino</option>
-                        </select>
-                    </div>
-                    <div class="col-4">
-                        <div class="row">
-                            <div class="col-1"></div>
-                            <div class="col-11">
-                                {# 
-                                {% include 'helper/image_preview.html.twig' with {
-                                    'label' : 'Imagen',
-                                    'image' : getImage('imagen/datos', datos.imagen|default()),
-                                    'required' : true,
-                                    'name' : 'imagen',
-                                    'id' : 'fileimagen',
-                                } %}
-                                #}
-                                <img id="image-input" src="{{ asset('assets/media/avatars/blank.png') }}" width="100" height="100" />
-                                <p>
-                                <input type="file" name="imagen" onchange="preview(this);" >
-                                </p>
+
+                        <div class="col-10"></div>
+                        <div class="col-2 mb-2">
+                            <div class="form-check form-switch form-check-custom form-check-solid">
+                                <input class="form-check-input" type="checkbox" name="activo"   {% if(datos.activo|default()) %} checked="checked" {% endif %}>
+                                <label class="form-check-label fw-bold fs-6" for="flexSwitchChecked">Activo</label>
                             </div>
                         </div>
-                    </div>
-                    </form>
+                        <div class="col-6 mb-5">
+                            <label class="required fw-bold fs-6 mb-2">Nombre</label>
+                            <input type="text" name="nombre" class="form-control form-control-solid mb-3 mb-lg-0"
+                                    value="{{ datos.nombre|default() }}" required="required">
+                        </div>
+                        <div class="col-6 mb-5">
+                            <label class="required fw-bold fs-6 mb-2">Apellido</label>
+                            <input type="text" name="apellido" class="form-control form-control-solid mb-3 mb-lg-0"
+                                    value="{{ datos.apellido|default() }}" required="required">
+                        </div>
+                        <div class="col-6 mb-5">
+                            <label class="required fw-bold fs-6 mb-2">Sexo</label>
+                            <select id="sexo" name="sexo" class="form-control"  required="required">
+                                <option value="">Seleccione</option>
+                                <option value="m" {% if(datos.sexo|default() == 'm') %} selected="selected" {% endif %}>Masculino</option>
+                                <option value="f" {% if(datos.sexo|default() == 'f') %} selected="selected" {% endif %}>Femenino</option>
+                                <option value="n" {% if(datos.sexo|default() == 'n') %} selected="selected" {% endif %}>Prefiero no decirlo</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <div class="col-11">
+                                    <img id="image-input" width="100" height="100" alt="imagen"
+                                            {% if(datos.imagen|default() == "") %}
+                                                src="{{ asset('assets/media/avatars/blank.png') }}"
+                                            {% else %}
+                                                src="{{ asset('upload/imagen/datos/') }}{{ datos.imagen }}"
+                                            {% endif %}
+                                    />
+                                    <p>
+                                        <input type="file" id="imagen" >
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                 </div>
                 {#
                 <div class="row d-flex justify-content-center">
@@ -88,6 +86,7 @@
                 <button type="button" name="saveDato" class="btn btn-primary" data-action="saveDato">Guardar
                 </button>
             </div>
+            </form>
         </div>
     </div>
 </div>
