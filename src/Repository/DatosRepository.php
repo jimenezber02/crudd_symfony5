@@ -7,6 +7,7 @@ use App\Classes\TMLListResult;
 use App\Entity\Datos;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use PhpParser\Node\Expr\Array_;
 
 /**
  * @method Datos|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,75 +22,31 @@ class DatosRepository extends ServiceEntityRepository
         parent::__construct($registry, Datos::class);
     }
 
-    public function findDatos(array $options = null, $page = null, $perpage = 0):TMLListResult
+    public function findAllDatos(array $options = null):Array
     {
-        $query = SmtQueryBuilder::select()
-            ->sqlCalcFoundRows()
-            ->column('c.id', 'id')
-            ->column('c.nombre', 'nombre')
-            ->column('c.apellido', 'apellido')
-            ->column('c.sexo', 'sexo')
-            ->column('c.imagen', 'imagen')
-            ->column('c.activo', 'activo')
-            ->from('datos', 'c')
-        ;
+        $query = $this->createQueryBuilder('d')
+            ->orderBy('d.id', 'ASC')
+            ;
 
         if(isset($options['id'])){
             if($options['id'] != ""){
-                $query->where("c.id = :id")
-                    ->bind('id',$options['id'],'int');
+                $query->andWhere('d.id = :val')
+                ->setParameter('val', $options['id']);
             }
         }
 
         if(isset($options['nombre'])){
             $nombre = $options['nombre'];
-            $query->where("c.nombre LIKE :search")
-                ->bind('search', "%$nombre%");
+            $query->andWhere('d.nombre LIKE :val')
+                ->setParameter('val', "%$nombre%");
         }
 
         if(isset($options['activo'])){
             if($options['activo'] != 2){
-                $query->where("c.activo = :activo")
-                    ->bind('activo',$options['activo'],'int');
+                $query->andWhere('d.activo = :val')
+                    ->setParameter('val', $options['activo']);
             }
         }
-        SmtQueryBuilder::paginate($query,$page, $perpage);
-
-        $datos = $query->executeUsing($this->getEntityManager()->getConnection())->fetchAllAssociative();
-        $cant = $query->getTotalUsing();
-
-        return new TMLListResult($datos, $cant);
-        /*return $this->getEntityManager()
-            ->createQuery('
-            SELECT datos.id, datos.nombre, datos.apellido, datos.activo, datos.sexo, datos.imagen
-            From App:Datos datos')->getResult();*/
+        return $query->getQuery()->getResult();
     }
-    // /**
-    //  * @return Datos[] Returns an array of Datos objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('d.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Datos
-    {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

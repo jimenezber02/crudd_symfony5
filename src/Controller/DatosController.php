@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Classes\Enums\PaginationConfig;
 use App\Classes\FileUploader;
 use App\Entity\Datos;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,7 +32,7 @@ class DatosController extends AbstractController
     /**
      * @Route("/ajaxLoadDatos", name="ajaxLoadDatos")
      */
-    function ajaxLoadDatos(Request $request):Response
+    function ajaxLoadDatos(Request $request, PaginatorInterface $paginator):Response
     {
         $nombre = $request->get('nombre');
         $id = $request->get('id');
@@ -41,17 +42,24 @@ class DatosController extends AbstractController
 
         $em = $this->getDoctrine()->getManager();
 
-        $datos = $em->getRepository('App:Datos')->findDatos([
+        $datos = $em->getRepository('App:Datos')->findAllDatos([
             'id' => $id,
             'nombre' => $nombre,
             'activo' => $activo
         ]);
 
+
+        $pagination = $paginator->paginate(
+            $datos, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            2 /*limit per page*/
+        );
         return $this->render('datos/list.html.twig',[
-            'datos'=>$datos->getList(),
-            'pagecount' => $datos->getCount(),
-            'pageactive' => $pageactive,
-            'perpage' => $perpage,
+            //'datos'=>$datos,
+            'pagination' => $pagination
+            //'pagecount' => $datos->getCount(),
+            //'pageactive' => $pageactive,
+            //'perpage' => $perpage,
         ]);
     }
 
