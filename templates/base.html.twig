@@ -6,9 +6,6 @@
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
-        {# <link href="{{ asset('vendor/metronic/css/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css"/> #}
-       {# <link href="{{ asset('vendor/metronic/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css"/> #}
-        {# <link href="{{ asset('vendor/metronic/css/style.bundle.css') }}" rel="stylesheet" type="text/css"/> #}
         <!-- CSS only -->
         <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
               rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
@@ -23,7 +20,6 @@
     <body>
     <div id="modal_container"></div>
     <div id="modal_container_aux"></div>
-
     <div id="principal">
         <div id="toolbar">
             {%  block toolbar %}
@@ -78,39 +74,6 @@
     <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     -->
-
-    {#
-        <script src="{{ asset('vendor/metronic/plugins/global/plugins.bundle.js') }}"></script>
-        <script src="{{ asset('vendor/metronic/js/scripts.bundle.js') }}"></script>
-        <script src="{{ asset('vendor/metronic/js/layout/app.js') }}"></script>
-        <script src="{{ asset('vendor/metronic/js/vendors/plugins/jquery.validate.js') }}"></script>
-        <script src="{{ asset('vendor/metronic/js/vendors/plugins/jquery.form.min.js') }}"></script>
-        <script src="{{ asset('assets/js/app.js') }}"></script>
-    #}
-
-    {#
-        <script>
-            var message = 'Cargando componentes del sistema'
-            var blockUI = new KTBlockUI(document.querySelector('body'));
-            $(window).on('load', function () {
-
-                var initCorePromise = new Promise(function (resolve, reject) {
-                    //TML.init(urls, {{ app.user.id|default() }});
-                    resolve();
-                });
-                var initFrameworkPromise = new Promise(function (resolve, reject) {
-                    resolve();
-                });
-                initCorePromise
-                    .then(initFrameworkPromise)
-                    .then(function () {
-                            TML.onReady();
-                        }
-                    );
-            });
-        </script>
-    #}
-
 
     {% block javascripts %}
 

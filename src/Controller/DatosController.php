@@ -114,10 +114,10 @@ class DatosController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $dato = null;
-        //$dato = $em->getRepository('App:Datos')->find($id);
-        //$em->remove($dato);
-        //$em->flush();
+        $dato = $em->getRepository('App:Datos')->find($id);
+        $em->remove($dato);
+        $em->flush();
 
-        return new JsonResponse($id);
+        return new JsonResponse($dato->getNombre());
     }
 }
