@@ -9,12 +9,13 @@ $(document).ready(function (){
     $('[data-action="findDatos"]').off('click').on('click',(e)=>{
         loadDatos();
     });
-    $('[data-action="enterFindDato"]').off('keyup').on('keyup',(e)=>{
+
+    $('[data-action="enterFindNombre"]').off('keyup').on('keyup',(e)=>{
         if(e.keyCode == 13){
             loadDatos();
         }
     });
-    $('[data-action="enterFindNombre"]').off('keyup').on('keyup',(e)=>{
+    $('[data-action="enterFindApellido"]').off('keyup').on('keyup',(e)=>{
         if(e.keyCode == 13){
             loadDatos();
         }
@@ -28,6 +29,7 @@ $(document).ready(function (){
 
 function loadDatos(){
     var form = $('#form_search_datos');
+
     $.ajax({
         url: '/Administracion/ajaxLoadDatos',
         data: form.serialize(),
@@ -74,7 +76,7 @@ function saveDato(id){
         type: 'post',
         enctype: 'multipart/form-data',
         data: formData,
-        url: 'ajaxSaveDato',
+        url: '/Administracion/ajaxSaveDato',
         withFile: true,
         contentType: false,
         cache: false,

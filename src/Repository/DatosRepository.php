@@ -22,31 +22,56 @@ class DatosRepository extends ServiceEntityRepository
         parent::__construct($registry, Datos::class);
     }
 
-    public function findAllDatos(array $options = null):Array
+    public function findAllDatos(array $options = null)
     {
-        $query = $this->createQueryBuilder('d')
-            ->orderBy('d.id', 'ASC')
-            ;
-
-        if(isset($options['id'])){
-            if($options['id'] != ""){
-                $query->andWhere('d.id = :val')
-                ->setParameter('val', $options['id']);
+        $qb =$this->createQueryBuilder('d')
+        ->addOrderBy('d.id','DESC')
+        ;
+        $query = $qb;
+        if(isset($options['nombre'])) {
+            if ($options['nombre'] != "") {
+                $nombre = $options['nombre'];
+                $qb
+                    ->andWhere(
+                        $qb->expr()->like('d.nombre',':val')
+                    )
+                    ->setParameter('val', "%$nombre%")
+                ;
+            }
+        }
+        if(isset($options['apellido'])) {
+            if ($options['apellido'] != "") {
+                $apellido = $options['apellido'];
+                $qb
+                    ->andWhere(
+                        $qb->expr()->like('d.apellido',':val')
+                    )
+                    ->setParameter('val', "%$apellido%")
+                ;
+            }
+        }
+        if(isset($options['activo'])) {
+            if ($options['activo'] != 2) {
+                $qb
+                    ->andWhere(
+                        $qb->expr()->eq('d.activo', ':activo')
+                    )
+                    ->setParameter('activo', $options['activo'])
+                ;
+            }
+        }
+        if(isset($options['sexo'])) {
+            if ($options['sexo'] != -1) {
+                $sexo = $options['sexo'];
+                $qb
+                    ->andWhere(
+                        $qb->expr()->like('d.sexo',':val')
+                    )
+                    ->setParameter('val', "%$sexo%")
+                ;
             }
         }
 
-        if(isset($options['nombre'])){
-            $nombre = $options['nombre'];
-            $query->andWhere('d.nombre LIKE :val')
-                ->setParameter('val', "%$nombre%");
-        }
-
-        if(isset($options['activo'])){
-            if($options['activo'] != 2){
-                $query->andWhere('d.activo = :val')
-                    ->setParameter('val', $options['activo']);
-            }
-        }
-        return $query->getQuery()->getResult();
+        return $query->getQuery();
     }
 }

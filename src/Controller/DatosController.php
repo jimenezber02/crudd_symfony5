@@ -35,16 +35,16 @@ class DatosController extends AbstractController
     function ajaxLoadDatos(Request $request, PaginatorInterface $paginator):Response
     {
         $nombre = $request->get('nombre');
-        $id = $request->get('id');
+        $apellido = $request->get('apellido');
+        $sexo = $request->get('sexo');
         $activo = $request->get('activo');
-        $pageactive = $request->get('page') ?? PaginationConfig::PAGE;
-        $perpage = $request->get('perpage') ?? PaginationConfig::PERPAGE;
 
         $em = $this->getDoctrine()->getManager();
 
         $datos = $em->getRepository('App:Datos')->findAllDatos([
-            'id' => $id,
             'nombre' => $nombre,
+            'apellido' => $apellido,
+            'sexo' => $sexo,
             'activo' => $activo
         ]);
 
@@ -52,14 +52,10 @@ class DatosController extends AbstractController
         $pagination = $paginator->paginate(
             $datos, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-            2 /*limit per page*/
+             /*limit per page*/
         );
         return $this->render('datos/list.html.twig',[
-            //'datos'=>$datos,
             'pagination' => $pagination
-            //'pagecount' => $datos->getCount(),
-            //'pageactive' => $pageactive,
-            //'perpage' => $perpage,
         ]);
     }
 
