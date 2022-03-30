@@ -34,23 +34,26 @@
                             </div>
                         </div>
                         <div class="col-6 mb-5">
-                            <label class="required fw-bold fs-6 mb-2">Nombre</label>
+                            <label for="nombre" class="required fw-bold fs-6 mb-2">Nombre</label>
                             <input type="text" name="nombre" class="form-control form-control-solid mb-3 mb-lg-0"
-                                    value="{{ datos.nombre|default() }}" required="required">
+                                    value="{{ datos.nombre|default() }}" data-validation="alphanumeric">
+                            <label class="error fv-plugins-message-container invalid-feedback" for="nombre"></label>
                         </div>
                         <div class="col-6 mb-5">
-                            <label class="required fw-bold fs-6 mb-2">Apellido</label>
+                            <label for="apellido" class="required fw-bold fs-6 mb-2">Apellido</label>
                             <input type="text" name="apellido" class="form-control form-control-solid mb-3 mb-lg-0"
-                                    value="{{ datos.apellido|default() }}" required="required">
+                                    value="{{ datos.apellido|default() }}">
+                            <label for="apellido" class="error fv-plugins-message-container invalid-feedback"></label>
                         </div>
                         <div class="col-6 mb-5">
-                            <label class="required fw-bold fs-6 mb-2">Sexo</label>
-                            <select id="sexo" name="sexo" class="form-control"  required="required">
+                            <label for="sexo" class="required fw-bold fs-6 mb-2">Sexo</label>
+                            <select id="sexo" name="sexo" class="form-control">
                                 <option value="">Seleccione</option>
                                 <option value="m" {% if(datos.sexo|default() == 'm') %} selected="selected" {% endif %}>Masculino</option>
                                 <option value="f" {% if(datos.sexo|default() == 'f') %} selected="selected" {% endif %}>Femenino</option>
                                 <option value="n" {% if(datos.sexo|default() == 'n') %} selected="selected" {% endif %}>Prefiero no decirlo</option>
                             </select>
+                            <label for="sexo" class="error fv-plugins-message-container invalid-feedback"></label>
                         </div>
                         <div class="col-4">
                             <div class="row">

@@ -6,6 +6,7 @@ $(document).ready(function (){
         let id = $(this).data('id');
         modal(id);
     });
+
     $('[data-action="findDatos"]').off('click').on('click',(e)=>{
         loadDatos();
     });
@@ -15,6 +16,7 @@ $(document).ready(function (){
             loadDatos();
         }
     });
+
     $('[data-action="enterFindApellido"]').off('keyup').on('keyup',(e)=>{
         if(e.keyCode == 13){
             loadDatos();
@@ -40,7 +42,6 @@ function loadDatos(){
         success:function(response){
             $('#container_datos').html(response);
         },
-
     }).done(function (response){
         $('[data-action="loadDato"]').off('click').on('click',function (e){
             let id = $(this).data('id')
@@ -72,20 +73,25 @@ function saveDato(id){
     var formData = new FormData(document.getElementById('form_datos'));
     var file = $('input[type=file]').get(0).files[0];
     formData.append("imagen",file);
-    $.ajax({
-        type: 'post',
-        enctype: 'multipart/form-data',
-        data: formData,
-        url: '/Administracion/ajaxSaveDato',
-        withFile: true,
-        contentType: false,
-        cache: false,
-        processData: false,
-        success: function (response){
-           loadDatos();
-           $('#modal_datos').modal('hide');
-        }
-    });
+
+    var form = $('#form_datos')
+    validacion(form);
+    if(form.valid()){
+        $.ajax({
+            type: 'post',
+            enctype: 'multipart/form-data',
+            data: formData,
+            url: '/Administracion/ajaxSaveDato',
+            withFile: true,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (response){
+                loadDatos();
+                $('#modal_datos').modal('hide');
+            }
+        });
+    }
 }
 
 function deleteDato(id){
@@ -113,4 +119,31 @@ function preview(input){
       reader.readAsDataURL(file);
     }
     return file;
-  }
+}
+
+function validacion(form){
+    form.validate({
+        rules:{
+            nombre:{
+                required: true
+            },
+            apellido: {
+                required: true
+            },
+            sexo: {
+                required: true
+            }
+        },
+        messages:{
+            nombre:{
+                required: "Nombre no válido"
+            },
+            apellido:{
+                required: "Apellido no válido"
+            },
+            sexo:{
+                required: "Sexo no válido"
+            }
+        }
+    });
+}
